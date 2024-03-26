@@ -47,26 +47,36 @@ class _HomepageState extends State<Homepage> {
               flex: 2,
               child: Container(
                 padding: EdgeInsets.all(10.0),
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 10.0,
-                  ),
-                  itemCount: buttons.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return MyButtons(
-                      color: Colors.deepOrange,
-                      textColor: Colors.white,
-                      buttonText: buttons[index],
-                    );
-                  },
-                ),
+                child: buildButtonGrid(),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget buildButtonGrid() {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0,
+      ),
+      itemCount: buttons.length,
+      itemBuilder: (BuildContext context, int index) {
+        return MyButtons(
+          color: isOperatorSymbol(buttons[index])
+              ? Colors.deepOrange
+              : Colors.yellow,
+          textColor: Colors.white,
+          buttonText: buttons[index],
+        );
+      },
+    );
+  }
+
+  bool isOperatorSymbol(String x) {
+    return ['%', '/', '-', '+', '*', '='].contains(x);
   }
 }
