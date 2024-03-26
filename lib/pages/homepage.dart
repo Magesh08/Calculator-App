@@ -95,7 +95,11 @@ class _HomepageState extends State<Homepage> {
             color: Colors.green,
             textColor: Colors.white,
             buttonText: buttons[index],
-            buttontapped: () {},
+            buttontapped: () {
+              setState(() {
+                userQuestion = '';
+              });
+            },
           );
         }
         if (index == 1) {
@@ -103,7 +107,12 @@ class _HomepageState extends State<Homepage> {
             color: Colors.red,
             textColor: Colors.white,
             buttonText: buttons[index],
-            buttontapped: () {},
+            buttontapped: () {
+              setState(() {
+                userQuestion =
+                    userQuestion.substring(0, userQuestion.length - 1);
+              });
+            },
           );
         } else {
           return MyButtons(
