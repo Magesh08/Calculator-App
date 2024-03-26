@@ -65,6 +65,20 @@ class _HomepageState extends State<Homepage> {
       ),
       itemCount: buttons.length,
       itemBuilder: (BuildContext context, int index) {
+        if (index == 0) {
+          return MyButtons(
+            color: Colors.green,
+            textColor: Colors.white,
+            buttonText: buttons[index],
+          );
+        }
+        if (index == 1) {
+          return MyButtons(
+            color: Colors.red,
+            textColor: Colors.white,
+            buttonText: buttons[index],
+          );
+        }
         return MyButtons(
           color: isOperatorSymbol(buttons[index])
               ? Colors.deepOrange
