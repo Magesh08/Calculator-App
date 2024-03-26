@@ -9,6 +9,9 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  var userQuestion = '';
+  var userAnswer = '';
+
   final List<String> buttons = [
     'C',
     'DEL',
@@ -40,12 +43,34 @@ class _HomepageState extends State<Homepage> {
           children: [
             Expanded(
               child: Container(
+                width: MediaQuery.of(context).size.width * 1,
                 color: Colors.blueGrey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        padding: EdgeInsets.only(left: 30),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          userQuestion,
+                          style: TextStyle(color: Colors.white, fontSize: 30),
+                        )),
+                    Container(
+                        padding: EdgeInsets.only(right: 30),
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          userAnswer,
+                          style: TextStyle(color: Colors.white, fontSize: 30),
+                        ))
+                  ],
+                ),
               ),
             ),
             Expanded(
               flex: 2,
               child: Container(
+                color: Colors.blueGrey,
                 padding: EdgeInsets.all(10.0),
                 child: buildButtonGrid(),
               ),
@@ -70,6 +95,7 @@ class _HomepageState extends State<Homepage> {
             color: Colors.green,
             textColor: Colors.white,
             buttonText: buttons[index],
+            buttontapped: () {},
           );
         }
         if (index == 1) {
@@ -77,15 +103,23 @@ class _HomepageState extends State<Homepage> {
             color: Colors.red,
             textColor: Colors.white,
             buttonText: buttons[index],
+            buttontapped: () {},
+          );
+        } else {
+          return MyButtons(
+            buttontapped: () {
+              // Define the function to execute when the button is tapped
+              setState(() {
+                userQuestion += buttons[index];
+              });
+            },
+            color: isOperatorSymbol(buttons[index])
+                ? Color.fromARGB(255, 65, 224, 190)
+                : Color.fromARGB(255, 167, 167, 164),
+            textColor: Colors.white,
+            buttonText: buttons[index],
           );
         }
-        return MyButtons(
-          color: isOperatorSymbol(buttons[index])
-              ? Colors.deepOrange
-              : Colors.yellow,
-          textColor: Colors.white,
-          buttonText: buttons[index],
-        );
       },
     );
   }
