@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loginauth/components/textfieldui.dart';
 
 class passwordpage extends StatefulWidget {
   const passwordpage({super.key});
@@ -8,8 +12,55 @@ class passwordpage extends StatefulWidget {
 }
 
 class _passwordpageState extends State<passwordpage> {
+  void signin() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
   final usernamecontrol = TextEditingController();
   final passwordcontrol = TextEditingController();
+
+  void signuserId(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usernamecontrol.text,
+        password: passwordcontrol.text,
+      );
+      Navigator.pop(context);
+    } catch (error) {
+      String errorMessage = 'An error occurred';
+      if (error is FirebaseAuthException) {
+        switch (error.code) {
+          case 'user-not-found':
+          case 'wrong-password':
+            errorMessage = 'Incorrect username or password';
+            break;
+          default:
+            errorMessage = 'Authentication failed. Please try again later.';
+            break;
+        }
+      }
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Sign In Failed'),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Close'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,48 +84,17 @@ class _passwordpageState extends State<passwordpage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                      // Label text for the TextField
-                      hintText:
-                          'Enter your Email id  ', // Hint text shown when the TextField is empty
-                      prefixIcon: Icon(Icons
-                          .email_rounded), // Icon displayed before the input field
-                      border: OutlineInputBorder(
-                        // Border around the TextField
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
-                            color: Colors.blue), // Color of the border
-                      ),
-                      filled:
-                          true, // Whether to fill the area around the TextField
-                      fillColor: Colors.grey[
-                          200], // Color to fill the area around the TextField
-                      contentPadding:
-                          EdgeInsets.all(12.0), // Padding inside the TextField
-                    ),
-                    style: TextStyle(
-                        fontSize:
-                            16.0), // Style for the text entered in the TextField
+                  Textfieldfun(
+                    controller: usernamecontrol,
+                    hintText: 'Enter your gmail id',
+                    obscuretext: false,
+                    icon: Icons.mail_rounded,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    padding: EdgeInsets.only(top: 15),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter the password',
-                        prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                        contentPadding: EdgeInsets.all(12.0),
-                      ),
-                      style: TextStyle(fontSize: 16.0),
-                    ),
+                  Textfieldfun(
+                    controller: passwordcontrol,
+                    hintText: 'Enter the password',
+                    obscuretext: true,
+                    icon: Icons.password_rounded,
                   ),
                   Padding(
                     padding: EdgeInsets.all(10.0),
@@ -83,7 +103,12 @@ class _passwordpageState extends State<passwordpage> {
                       child: Text('Forgot Password'),
                     ),
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text('sign in')),
+                  ElevatedButton(
+                    onPressed: () {
+                      signuserId(context);
+                    },
+                    child: Text('Sign In'),
+                  ),
                   Text('----or continue with----'),
                 ]),
           ),

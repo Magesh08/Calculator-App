@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:loginauth/pages/Homepage.dart';
+import 'package:loginauth/pages/Passwordpage.dart'; // Import FirebaseAuth
 
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key); // Correct constructor syntax
@@ -16,11 +20,11 @@ class AuthPage extends StatelessWidget {
             if (snapshot.hasData) {
               // User is signed in
               // Return widget for signed in user
-              return Text('User is signed in: ${snapshot.data!.displayName}');
+              return Homepage();
             } else {
               // User is not signed in
               // Return widget for not signed in user
-              return Text('User is not signed in');
+              return passwordpage();
             }
           } else {
             // Return widget while connection is still active

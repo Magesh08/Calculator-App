@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:loginauth/pages/Passwordpage.dart';
+import 'package:loginauth/pages/authpage.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
-        body: passwordpage(), // Wrap Homepage with body property of Scaffold
+        body: AuthPage(), // Wrap Homepage with body property of Scaffold
       ),
     );
   }
