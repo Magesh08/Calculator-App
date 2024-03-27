@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:calculator/models/button_model.dart'; // Import the MyButtons widget
+import 'package:calculator/models/button_model.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -98,6 +99,7 @@ class _HomepageState extends State<Homepage> {
             buttontapped: () {
               setState(() {
                 userQuestion = '';
+                userAnswer = '';
               });
             },
           );
@@ -111,6 +113,17 @@ class _HomepageState extends State<Homepage> {
               setState(() {
                 userQuestion =
                     userQuestion.substring(0, userQuestion.length - 1);
+              });
+            },
+          );
+        } else if (index == buttons.length - 1) {
+          return MyButtons(
+            color: Colors.green,
+            textColor: Colors.white,
+            buttonText: buttons[index],
+            buttontapped: () {
+              setState(() {
+                equalprassed();
               });
             },
           );
@@ -135,5 +148,19 @@ class _HomepageState extends State<Homepage> {
 
   bool isOperatorSymbol(String x) {
     return ['%', '/', '-', '+', '*', '='].contains(x);
+  }
+
+  void equalprassed() {
+    String finalQuestion = userQuestion;
+    Parser p = Parser();
+    Expression exp = p.parse(finalQuestion);
+
+    // Bind variables:
+    ContextModel cm = ContextModel();
+
+    // Evaluate expression:
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+    userAnswer = eval.toString();
   }
 }

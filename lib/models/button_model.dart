@@ -19,12 +19,15 @@ class MyButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: buttontapped, // Execute buttontapped function when tapped
-      child: Container(
-        color: color,
-        child: Center(
-          child: Text(
-            buttonText,
-            style: TextStyle(color: textColor),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Container(
+          color: color,
+          child: Center(
+            child: Text(
+              buttonText,
+              style: TextStyle(color: textColor, fontSize: 30),
+            ),
           ),
         ),
       ),
