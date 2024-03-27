@@ -21,7 +21,7 @@ class _HomepageState extends State<Homepage> {
     '9',
     '8',
     '7',
-    '*',
+    'x',
     '6',
     '5',
     '4',
@@ -148,11 +148,13 @@ class _HomepageState extends State<Homepage> {
   }
 
   bool isOperatorSymbol(String x) {
-    return ['%', '/', '-', '+', '*', '='].contains(x);
+    return ['%', '/', '-', '+', 'x', '='].contains(x);
   }
 
   void equalprassed() {
     String finalQuestion = userQuestion;
+    finalQuestion = finalQuestion.replaceAll('x', '*');
+
     Parser p = Parser();
     Expression exp = p.parse(finalQuestion);
 
