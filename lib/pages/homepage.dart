@@ -32,7 +32,7 @@ class _HomepageState extends State<Homepage> {
     '+',
     '0',
     '.',
-    'ANS',
+    '00',
     '=',
   ];
 
@@ -43,39 +43,36 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: Colors.blueGrey,
         body: Column(
           children: [
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 1,
-                color: Colors.blueGrey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(left: 30),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          userQuestion,
-                          style: TextStyle(color: Colors.white, fontSize: 30),
-                        )),
-                    Container(
-                        padding: EdgeInsets.only(right: 30),
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          userAnswer,
-                          style: TextStyle(color: Colors.white, fontSize: 30),
-                        ))
-                  ],
-                ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 1,
+              color: Colors.blueGrey,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                      padding: EdgeInsets.only(left: 30),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        userQuestion,
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      )),
+                  Container(
+                      padding: EdgeInsets.only(right: 30),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        userAnswer,
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ))
+                ],
               ),
             ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                color: Colors.blueGrey,
-                padding: EdgeInsets.all(10.0),
-                child: buildButtonGrid(),
-              ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              color: Colors.blueGrey,
+              padding: EdgeInsets.all(10.0),
+              child: buildButtonGrid(),
             ),
           ],
         ),
