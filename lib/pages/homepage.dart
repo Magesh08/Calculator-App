@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:calculator/models/button_model.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:intl/intl.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -44,7 +45,7 @@ class _HomepageState extends State<Homepage> {
         body: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.height * 0.3,
               width: MediaQuery.of(context).size.width * 1,
               color: Colors.blueGrey,
               child: Column(
@@ -149,18 +150,27 @@ class _HomepageState extends State<Homepage> {
   }
 
   void equalprassed() {
-    String finalQuestion = userQuestion;
-    finalQuestion = finalQuestion.replaceAll('x', '*');
+    try {
+      String finalQuestion =
+          userQuestion.replaceAll(',', ''); // Remove commas for calculation
+      finalQuestion = finalQuestion.replaceAll('x', '*');
 
-    Parser p = Parser();
-    Expression exp = p.parse(finalQuestion);
+      Parser p = Parser();
+      Expression exp = p.parse(finalQuestion);
 
-    // Bind variables:
-    ContextModel cm = ContextModel();
+      // Bind variables:
+      ContextModel cm = ContextModel();
 
-    // Evaluate expression:
-    double eval = exp.evaluate(EvaluationType.REAL, cm);
+      // Evaluate expression:
+      double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-    userAnswer = eval.toString();
+      // Format the answer with commas
+      NumberFormat formatter = NumberFormat("#,###");
+      userAnswer = formatter.format(eval);
+    } catch (e) {
+      // Handle the error, e.g., by providing feedback to the user
+      print('Error: $e');
+      userAnswer = 'Invalid expression';
+    }
   }
 }
